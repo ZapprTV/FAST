@@ -1,0 +1,37 @@
+name: Genera lista canali FAST
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Installa Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Genera lista
+        shell: bash
+        working-directory: ./
+        run: |
+          bun install
+          bun generate.mjs
+
+      - name: Deploy su Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-args: '--prod'
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}

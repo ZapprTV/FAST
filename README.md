@@ -1,0 +1,3 @@
+Questa repo contiene una GitHub Action che, ogni giorno a mezzanotte, genera le liste dei canali FAST, provenienti da Samsung TV Plus e Pluto TV, per Zappr. Inoltre, per Pluto TV, scarica tutti i loghi dei canali per poi ritagliarli e comprimerli in formato WEBP.
+
+Gran parte delle funzionalità di questa repo non sarebbero state possibili senza il fantastico lavoro di [Matt Huisman](https://matthuisman.nz). Supportatelo tramite una donazione: https://ko-fi.com/matthuisman _(1 dollaro neozelandese = circa 50 centesimi di euro)_
