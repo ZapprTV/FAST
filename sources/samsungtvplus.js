@@ -23,23 +23,38 @@ export default async function fetchChannels(channels) {
             for (const channel of channels) {
                 await new Promise(r => setTimeout(r, 100));
                 log("adding", { source: "Samsung TV Plus", channel: channel.name, padding: spacerPadding });
-                if (!overrides["samsungtvplus"][channel.id]) {
+                if (!overrides["samsungtvplus"][channel.id] || (overrides["samsungtvplus"][channel.id] && overrides["samsungtvplus"][channel.id].url.includes("{URL}"))) {
                     if (!blacklist.includes(channel.id)) {
                         if (!channel.license_url) {
                             const url = await fetch(`https://jmp2.uk/stvp-${channel.id}`, { redirect: "manual" }).then(response => response.headers.get("Location"));
                             if (!new URL(url).hostname.includes("pluto.tv")) {
-                                newChannelsList.push({
-                                    lcn: channel.chno,
-                                    logo: "https://tvpdotcomdynamiclogopeu.samsungcloud.tv/resize?url=" + channel.logo + "&h=250",
-                                    name: channel.name,
-                                    type: "hls",
-                                    url: url,
-                                    epg: {
-                                        source: "samsungtvplus",
-                                        id: channel.id
-                                    }
-                                });
-                                log("added", { source: "Samsung TV Plus", channel: channel.name, padding: spacerPadding });
+                                if (!overrides["samsungtvplus"][channel.id]) {
+                                    newChannelsList.push({
+                                        lcn: channel.chno,
+                                        logo: "https://tvpdotcomdynamiclogopeu.samsungcloud.tv/resize?url=" + channel.logo + "&h=250",
+                                        name: channel.name,
+                                        type: "hls",
+                                        url: url,
+                                        epg: {
+                                            source: "samsungtvplus",
+                                            id: channel.id
+                                        }
+                                    });
+                                    log("added", { source: "Samsung TV Plus", channel: channel.name, padding: spacerPadding });
+                                } else {
+                                    newChannelsList.push({
+                                        lcn: channel.chno,
+                                        logo: "https://tvpdotcomdynamiclogopeu.samsungcloud.tv/resize?url=" + channel.logo + "&h=250",
+                                        name: channel.name,
+                                        type: overrides["samsungtvplus"][channel.id].type,
+                                        url: overrides["samsungtvplus"][channel.id].url.replaceAll("{URL}", encodeURIComponent(url)),
+                                        epg: {
+                                            source: "samsungtvplus",
+                                            id: channel.id
+                                        }
+                                    });
+                                    log("added", { source: "Samsung TV Plus", channel: channel.name, padding: spacerPadding, reason: "Prefisso" });
+                                };
                             } else {
                                 log("not-added", { source: "Samsung TV Plus", channel: channel.name, padding: spacerPadding, reason: "CORS - Pluto TV" });
                             };
@@ -54,8 +69,8 @@ export default async function fetchChannels(channels) {
                         lcn: channel.chno,
                         logo: "https://tvpdotcomdynamiclogopeu.samsungcloud.tv/resize?url=" + channel.logo + "&h=250",
                         name: channel.name,
-                        type: "hls",
-                        url: overrides["samsungtvplus"][channel.id],
+                        type: overrides["samsungtvplus"][channel.id].type,
+                        url: overrides["samsungtvplus"][channel.id].url,
                         epg: {
                             source: "samsungtvplus",
                             id: channel.id
