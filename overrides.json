@@ -29,8 +29,7 @@
             "url": "https://www.bloomberg.com/media-manifest/streams/phoenix-us.m3u8"
         },
         "IT2200001FW": {
-            "type": "iframe",
-            "url": "https://www.livereacting.com/tools/hls-player-embed?autoplay=1&url={URL}"
+            "license": "clearkey"
         }
     }
 }
