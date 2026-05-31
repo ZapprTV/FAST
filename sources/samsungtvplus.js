@@ -2,7 +2,7 @@ import log from "../utils/logger";
 import overrides from "../overrides.json";
 
 export default async function fetchChannels(channels) {
-    let blacklist = ["ITBA1500001R6"];
+    let blacklist = ["ITBA1500001R6", "IT4000061Q", "IT3200004WU"];
     let newChannelsList = [...channels, {
         categorySeparator: "Samsung TV Plus",
         id: "samsungtvplus"
