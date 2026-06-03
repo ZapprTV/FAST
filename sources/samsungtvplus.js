@@ -31,7 +31,7 @@ export default async function fetchChannels(channels) {
                                 if (!overrides["samsungtvplus"][channel.id]) {
                                     newChannelsList.push({
                                         lcn: channel.chno,
-                                        logo: "https://tvpdotcomdynamiclogopeu.samsungcloud.tv/resize?url=" + channel.logo + "&h=250",
+                                        logo: "https://wsrv.nl/?url=" + channel.logo + "&w=300&h=300",
                                         name: channel.name,
                                         type: "hls",
                                         url: url,
@@ -44,7 +44,7 @@ export default async function fetchChannels(channels) {
                                 } else {
                                     let channelValue = {
                                         lcn: channel.chno,
-                                        logo: "https://tvpdotcomdynamiclogopeu.samsungcloud.tv/resize?url=" + channel.logo + "&h=250",
+                                        logo: "https://wsrv.nl/?url=" + channel.logo + "&w=300&h=300",
                                         name: channel.name,
                                         type: "hls",
                                         url: url,
@@ -71,7 +71,7 @@ export default async function fetchChannels(channels) {
                 } else {
                     newChannelsList.push({
                         lcn: channel.chno,
-                        logo: "https://tvpdotcomdynamiclogopeu.samsungcloud.tv/resize?url=" + channel.logo + "&h=250",
+                        logo: "https://wsrv.nl/?url=" + channel.logo + "&w=300&h=300",
                         name: channel.name,
                         type: overrides["samsungtvplus"][channel.id].type,
                         url: overrides["samsungtvplus"][channel.id].url,
