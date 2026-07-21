@@ -1,7 +1,7 @@
 import log from "../utils/logger";
 import overrides from "../overrides.json";
 
-export default async function fetchChannels(channels) {
+export default async function fetchChannels(channels, country) {
     let blacklist = ["ITBA1500001R6", "IT4000061Q", "IT3200004WU"];
     let newChannelsList = [...channels, {
         categorySeparator: "Samsung TV Plus",
@@ -14,10 +14,10 @@ export default async function fetchChannels(channels) {
         .then(uintArray => Bun.gunzipSync(uintArray))
         .then(result => JSON.parse(new TextDecoder().decode(result)))
         .then(async json => {
-            const spacerPadding = Object.keys(json.regions.it.channels).map(channel => json.regions.it.channels[channel]).sort((a, b) => b.name.length - a.name.length)[0].name.length;
+            const spacerPadding = Object.keys(json.regions[country].channels).map(channel => json.regions[country].channels[channel]).sort((a, b) => b.name.length - a.name.length)[0].name.length;
 
-            const channels = Object.keys(json.regions.it.channels)
-                .map(channel => { let result = json.regions.it.channels[channel]; result.id = channel; return result })
+            const channels = Object.keys(json.regions[country].channels)
+                .map(channel => { let result = json.regions[country].channels[channel]; result.id = channel; return result })
                 .sort((a, b) => a.chno - b.chno);
                 
             for (const channel of channels) {

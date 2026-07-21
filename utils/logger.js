@@ -23,11 +23,11 @@ export default async function log(type, options) {
         ` ${colors.red}❌  Non aggiunto (${options.reason})${colors.reset}` + "\n"
     )
     else if (type === "writing") process.stdout.write(
-        `${colors.gray}Scrittura JSON${options && options.region ? ` (${options.region})` : ""} > ` + "\n"
+        `${colors.gray}Scrittura JSON${options && options.country ? ` (${options.country})` : ""} > ` + "\n"
     )
     else if (type === "writing-done") process.stdout.write(
         `\x1b[1A\r` +
-        `${colors.gray}Scrittura JSON > ${colors.green}✅  Fatto!${colors.reset}` + "\n"
+        `${colors.gray}Scrittura JSON${options && options.country ? ` (${options.country})` : ""} > ${colors.green}✅  Fatto!${colors.reset}` + "\n"
     )
     else if (type === "spacer") console.log(colors.gray + "─".repeat(options && options.width ? options.width : process.stdout.columns) + colors.reset);
 
